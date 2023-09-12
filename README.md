@@ -1,2 +1,3 @@
 # Assignment1
-you literally suck at this
+you all suck at this
+but i do to so its ok <3
