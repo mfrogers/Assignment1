@@ -1,0 +1,102 @@
+import java.io.File;
+import java.util.ArrayList;
+import java.util.Scanner;
+import java.util.regex.Pattern;
+import java.io.FileNotFoundException;
+
+public class CarDataMain {
+
+	public static void main(String[] args) throws FileNotFoundException {
+		ArrayList<SaleRecord> carData = new ArrayList<SaleRecord>();		
+		
+		Scanner userInput = new Scanner(System.in);
+		System.out.println("fileName: ");
+		File fileName = new File(userInput.next());		
+		Scanner sc = new Scanner(fileName);
+		
+		//from stack overflow
+		sc.useDelimiter(Pattern.compile("([\n,]|(\r\n))+")); 
+	
+		long time1 = System.currentTimeMillis();
+		
+		sc.nextLine();
+		while(sc.hasNextLine()) {
+			carData.add(new SaleRecord(sc.next(), sc.next(), sc.next(), sc.next(), 
+					sc.next(), sc.next(), sc.next(), sc.next(), sc.next()));
+		}
+		
+		long time2 = System.currentTimeMillis();
+		//Milliseconds to seconds
+		System.out.println("\n"+(time2-time1)/1000+" seconds to read the file\n");
+		
+		time1 = System.currentTimeMillis();
+		double ASP22 = averageSalesPrice2022(carData);
+		time2 = System.currentTimeMillis();
+		System.out.println((time2-time1)/1000+" seconds to calculate average sale price in 2022");
+		System.out.println("The average Sale Price in 2022: "+ASP22+"\n");
+		
+		time1 = System.currentTimeMillis();
+		double maxCR = maxCommisionRate(carData);
+		time2 = System.currentTimeMillis();
+		System.out.println((time2-time1)/1000+" seconds to find maximum commission rate");
+		System.out.println("The maximum commission rate: "+maxCR+"\n");
+		
+		time1 = System.currentTimeMillis();
+		int hondaSR = hondaSalesRecords(carData);
+		time2 = System.currentTimeMillis();
+		System.out.println((time2-time1)/1000+" seconds to find the number of sales records for Honda");
+		System.out.println("The number of cars sold with car make Honda: "+hondaSR+"\n");
+	
+		time1 = System.currentTimeMillis();
+		int max2Y = maximum2Years(carData);
+		time2 = System.currentTimeMillis();
+		System.out.println((time2-time1)/1000+" seconds to find the number of sales records for cars used for maximum of 2 years");
+		System.out.println("Number of cars sold within 2 years of usage: "+max2Y+"\n");
+		
+	}
+
+	private static int maximum2Years(ArrayList<SaleRecord> carData) {
+		int max2Y = 0;
+		for(int i = 0; i < carData.size(); i++) {
+			if(carData.get(i).getYear()-carData.get(i).getCarYear() <= 2)
+				max2Y++;			
+		}		
+		return max2Y;
+	}
+
+	private static int hondaSalesRecords(ArrayList<SaleRecord> carData) {
+		int hondaSR = 0;
+		for(int i = 0; i < carData.size(); i++) {
+			if(carData.get(i).getCarMake().equalsIgnoreCase("honda"))
+				hondaSR++;
+		}		
+		return hondaSR;
+	}
+
+	private static double maxCommisionRate(ArrayList<SaleRecord> carData) {
+		double maxCR = 0;
+		for(int i = 0; i < carData.size(); i++) {
+			if(carData.get(i).getComissionRate() > maxCR) 
+				maxCR = carData.get(i).getComissionRate();			
+		}
+		return maxCR;
+	}
+
+	private static double averageSalesPrice2022(ArrayList<SaleRecord> carData) {
+		ArrayList<SaleRecord> carData2022 = new ArrayList<SaleRecord>();
+		for(int i = 0; i < carData.size(); i++) {
+			if(carData.get(i).getYear()==2022) 
+				carData2022.add(carData.get(i));
+		}
+		double avgSP = 0;
+		for(int i = 0; i < carData2022.size(); i++) {
+			avgSP += carData2022.get(i).getSalesPrice();
+		}
+		avgSP = avgSP/carData2022.size()-1;
+		return avgSP;
+	}
+	
+	//small_sample.txt
+	//car_sales_data.txt
+	//car_sales_data_short.txt	
+}
