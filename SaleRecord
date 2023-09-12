@@ -1,0 +1,78 @@
+import java.util.Scanner;
+
+public class SaleRecord {
+//	private int d; private int m; private int y;
+	private String Date;
+	private String salesPerson;
+	private String customerName;
+	private String carMake;
+	private String carModel;
+	private int carYear;
+	private int salesPrice;
+	private double comissionRate;
+	private double comissionEarned;
+
+	
+	
+	public SaleRecord(String Date, String salesPerson, String customerName, String carMake,  String carModel,
+			String carYear, String salesPrice, String comissionRate, String comissionEarned) {
+		
+		this.Date = Date;
+		this.salesPerson = salesPerson;
+		this.customerName = customerName;
+		this.carMake = carMake;
+		this.carModel = carModel;
+		this.carYear = Integer.parseInt(carYear);
+		this.salesPrice = Integer.parseInt(salesPrice);
+		this.comissionRate = Double.parseDouble(comissionRate);
+		this.comissionEarned = Double.parseDouble(comissionEarned);	
+		
+	}
+	
+	public int getYear() {
+		Scanner sc = new Scanner(Date);
+		sc.useDelimiter("-");
+		return sc.nextInt();
+	}
+
+	public void deBug() {
+		System.out.println(Date+" "+salesPerson+" "+customerName+" "+carMake+" "+carModel+" "+
+				carYear+" "+salesPrice+" "+comissionRate+" "+comissionEarned);
+	}
+
+	public String getDate() {
+		return Date;
+	}
+
+	public String getSalesPerson() {
+		return salesPerson;
+	}
+
+	public String getCustomerName() {
+		return customerName;
+	}
+
+	public String getCarMake() {
+		return carMake;
+	}
+
+	public String getCarModel() {
+		return carModel;
+	}
+
+	public int getCarYear() {
+		return carYear;
+	}
+
+	public int getSalesPrice() {
+		return salesPrice;
+	}
+
+	public double getComissionRate() {
+		return comissionRate;
+	}
+
+	public double getComissionEarned() {
+		return comissionEarned;
+	}
+}
